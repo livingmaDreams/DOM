@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        
+
+        form {
+            background-color: white;
+            text-align: center;
+            width: 600px;
+            height: 450px;
+            margin: auto;
+            border-radius: 30px;
+        }
+
+        input {
+            align-self: center;
+        }
+
+        hr {
+            height: 2px;
+            background-color: black;
+        }
+
+        fieldset {
+            border-bottom: 0ch;
+            border-top: 0ch;
+            border-left: 0ch;
+            border-right: 0ch;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form  id="myform">
+        <fieldset style="color: black;">
+            <label for="bookacall" style="color:orange;;">
+                <h2>Book a Call</h2>
+            </label><br>
+            <label for="def">Book a call slot and our representative will call you within 1hr of selected
+                time</label><br>
+            <hr style="color: black;">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" style="width:500px;height:25px;" ><br><br>
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" style="width:500px;height:25px;" ><br><br>
+            <label for="Phone">Phone:</label><br>
+            <input type="text" id="phone" style="width:500px;height:25px;" ><br><br>
+            <label for="time">Time for Call:</label><br>
+            <input type="date" id="date" style="width: 250px;height:25px;" >
+            <input type="time" id="time" style="width: 250px;height:25px;" ><br><br>
+            <input type="submit" id="submit" value="GET A CALL"
+                style="background-color:orange;color: white;width:500px;height:40px;border-radius: 5px;">
+
+        </fieldset>
+
+    </form>
+<script src="form.js">
+
+</script>
+</body>
+
+</html>
