@@ -7,7 +7,7 @@ const date = document.querySelector('#date');
 const time = document.querySelector('#time');
 
 
-
+// While submitting , store in local storage and print it
 form.addEventListener('submit',onSubmit);
 
 function onSubmit(e)
@@ -19,8 +19,15 @@ function onSubmit(e)
     else
     {
     const obj = {Name : nameInput.value,Email : mail.value,Phone : phone.value,Date: date.value,Time: time.value };
+    let obj_serialized = JSON.stringify(obj);  //JSON Stringify
+    localStorage.setItem(obj.Name,obj_serialized );
     console.log(obj);
-    localStorage.setItem(obj.Name,obj);
+    //console.log(obj.Name);
+    console.log(obj_serialized);
+    let obj_deserialized = JSON.parse(localStorage.getItem(nameInput.value)); //JSON parse
+    
+    console.log(obj_deserialized);
+    //console.log(obj_deserialized.Name);
     }
 
     nameInput.value='';
