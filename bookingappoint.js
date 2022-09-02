@@ -34,14 +34,10 @@ function onSubmit(e)
     {
     localstorage.getItem(mail.value).remove();
     }
-    const obj = {Name: nameInput.value,Email: mail.value,Phone: phone.value,DatE: date.value,Time: time.value };
+    let obj = {Name: nameInput.value,Email: mail.value,Phone: phone.value,DatE: date.value,Time: time.value };
     let obj_serialized = JSON.stringify(obj);  //JSON Stringify
     localStorage.setItem(obj.Email,obj_serialized );
-
- 
-
-// List Creation
-let list_creation = document.createElement('li');
+    let list_creation = document.createElement('li');
 list_creation.className="appointment-list";
 list_creation.style.fontSize="150%";
 list_creation.style.paddingTop = "1%";
@@ -64,6 +60,10 @@ del_button.style.marginLeft='15px';
 del_button.style.backgroundcolor = 'white';
 //del_button.style.float = 'right';
 list_creation.appendChild(del_button);
+
+
+
+ 
 
 
 nameInput.value='';
@@ -92,38 +92,36 @@ function local_Storage()
 {
     let values = [];
     let keys = Object.keys(localStorage);
-    let leng = keys.length;
+    let leng = keys.length-1;
 
 while ( leng>=0 ) {
     const objval = JSON.parse(localStorage.getItem(keys[leng]));
-    
-    
-      console.log(objval);
-      console.log(objval.Name);
-      
-// let list_creation = document.createElement('li');
-// list_creation.className="appointment-list";
-// list_creation.style.fontSize="150%";
-// list_creation.style.paddingTop = "1%";
-// let list_txt = document.createTextNode(objval.Name + " -- " + objval.Email + " -- " + objval.Phone + " -- " + objval.DatE + " -- " + objval.Time);
-// list_creation.appendChild(list_txt);
-// appoint_div.appendChild(list_creation);
+      // List Creation
+let list_creation = document.createElement('li');
+list_creation.className="appointment-list";
+list_creation.style.fontSize="150%";
+list_creation.style.paddingTop = "1%";
+let list_txt = document.createTextNode(objval.Name + " -- " + objval.Email + " -- " + objval.Phone + " -- " + objval.DatE + " -- " + objval.Time);
+list_creation.appendChild(list_txt);
+appoint_div.appendChild(list_creation);
 
-// // Delete and edit button creation
-// let edit_button = document.createElement('button');
-// edit_button.className="edit-button";
-// edit_button.textContent = 'edit';
-// edit_button.style.marginLeft='20px';
-// edit_button.style.backgroundcolor = 'white';
-// //edit_button.style.float = 'right';
-// list_creation.appendChild(edit_button);
-// let del_button = document.createElement('button');
-// del_button.className="delete-button";
-// del_button.textContent = 'X';
-// del_button.style.marginLeft='15px';
-// del_button.style.backgroundcolor = 'white';
-// //del_button.style.float = 'right';
-// list_creation.appendChild(del_button);
+// Delete and edit button creation
+let edit_button = document.createElement('button');
+edit_button.className="edit-button";
+edit_button.textContent = 'edit';
+edit_button.style.marginLeft='20px';
+edit_button.style.backgroundcolor = 'white';
+//edit_button.style.float = 'right';
+list_creation.appendChild(edit_button);
+let del_button = document.createElement('button');
+del_button.className="delete-button";
+del_button.textContent = 'X';
+del_button.style.marginLeft='15px';
+del_button.style.backgroundcolor = 'white';
+//del_button.style.float = 'right';
+list_creation.appendChild(del_button);
+
+      
 values.push(objval);
 leng--;
 }
