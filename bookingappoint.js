@@ -20,6 +20,8 @@ appoint_header.style.fontSize = '150%';
 appoint_header.style.fontWeight= 'bold';
 appoint_div.appendChild(appoint_header);
 
+let storage_values = local_Storage();
+
 // While submitting , store in local storage and print it
 form.addEventListener('submit',onSubmit);
 
@@ -28,19 +30,13 @@ function onSubmit(e)
     e.preventDefault();
     if(nameInput.value === '' || mail.value === '' || phone.value === '' || date.value === '' || time.value === '' )
     alert('Please enter Fields');
-    else
+    else if(storage_values.includes(mail.value))
     {
-    const obj = {Name : nameInput.value,Email : mail.value,Phone : phone.value,Date: date.value,Time: time.value };
+    localstorage.getItem(mail.value).remove();
+    }
+    const obj = {Name: nameInput.value,Email: mail.value,Phone: phone.value,DatE: date.value,Time: time.value };
     let obj_serialized = JSON.stringify(obj);  //JSON Stringify
     localStorage.setItem(obj.Email,obj_serialized );
-    //console.log(obj);
-    //console.log(obj.Name);
-    //console.log(obj_serialized);
-    let obj_deserialized = JSON.parse(localStorage.getItem(mail.value)); //JSON parse
-    
-    //console.log(obj_deserialized);
-    //console.log(obj_deserialized.Name);
-    }
 
  
 
@@ -52,12 +48,23 @@ list_creation.style.paddingTop = "1%";
 let list_txt = document.createTextNode(nameInput.value + " -- " + mail.value + " -- " + phone.value + " -- " + date.value + " -- " + time.value);
 list_creation.appendChild(list_txt);
 appoint_div.appendChild(list_creation);
-// let del_button = document.createElement('button');
-// del_button.className="delete-button";
-// del_button.textContent = 'X';
-//del_button.style.backgroundcolor = 'white';
+
+// Delete and edit button creation
+let edit_button = document.createElement('button');
+edit_button.className="edit-button";
+edit_button.textContent = 'edit';
+edit_button.style.marginLeft='20px';
+edit_button.style.backgroundcolor = 'white';
+//edit_button.style.float = 'right';
+list_creation.appendChild(edit_button);
+let del_button = document.createElement('button');
+del_button.className="delete-button";
+del_button.textContent = 'X';
+del_button.style.marginLeft='15px';
+del_button.style.backgroundcolor = 'white';
 //del_button.style.float = 'right';
-//list_creation.appendChild(del_button);
+list_creation.appendChild(del_button);
+
 
 nameInput.value='';
 mail.value='';
@@ -81,18 +88,44 @@ function mouseOut(e)
     btn.style.color='white';
 }
 
-
-console.log('local storage :' + localstorage());
-
-function localstorage()
+function local_Storage()
 {
     let values = [];
     let keys = Object.keys(localStorage);
     let leng = keys.length;
 
 while ( leng>=0 ) {
-    values.push(localStorage.getItem(keys[leng]) );
-    leng--;
+    const objval = JSON.parse(localStorage.getItem(keys[leng]));
+    
+    
+      console.log(objval);
+      console.log(objval.Name);
+      
+// let list_creation = document.createElement('li');
+// list_creation.className="appointment-list";
+// list_creation.style.fontSize="150%";
+// list_creation.style.paddingTop = "1%";
+// let list_txt = document.createTextNode(objval.Name + " -- " + objval.Email + " -- " + objval.Phone + " -- " + objval.DatE + " -- " + objval.Time);
+// list_creation.appendChild(list_txt);
+// appoint_div.appendChild(list_creation);
+
+// // Delete and edit button creation
+// let edit_button = document.createElement('button');
+// edit_button.className="edit-button";
+// edit_button.textContent = 'edit';
+// edit_button.style.marginLeft='20px';
+// edit_button.style.backgroundcolor = 'white';
+// //edit_button.style.float = 'right';
+// list_creation.appendChild(edit_button);
+// let del_button = document.createElement('button');
+// del_button.className="delete-button";
+// del_button.textContent = 'X';
+// del_button.style.marginLeft='15px';
+// del_button.style.backgroundcolor = 'white';
+// //del_button.style.float = 'right';
+// list_creation.appendChild(del_button);
+values.push(objval);
+leng--;
 }
 
 return values;
