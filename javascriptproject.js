@@ -2,11 +2,13 @@ const form = document.getElementById('form');
 
 form.addEventListener('submit',addList);
 
-showList();
+window.addEventListener("DOMContentLoaded",()=>{
+    showList();
+});
 
 function showList()
 {
-    axios.get('https://crudcrud.com/api/10c01c74b62c4805a8aefff32edf4979/appointments')
+    axios.get('https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments')
     .then(res =>{
         storageDisplay(res);
     })
@@ -81,15 +83,30 @@ function delList(e)
         {
             const parentElement = e.target.parentElement;
             expenseList.removeChild(parentElement);
-        }
-    }   
+            let b =parentElement.firstChild.nodeValue;
+            let url="https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments/";
 
+            axios.get('https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments')
+               .then((res) =>{
+                     for(let a of res.data)
+                     {
+                        if(a.Amount == b){
+                           url = url + a._id;
+                           console.log(url);
+                        }
+                     }
+                     axios.delete(url).then(res => console.log(res)).catch(err=> console.log(err));
+            
+                })
+            .catch(err => console.log(err));
+        }   
 
+     }
 }
 
 function sendingList(obj){
 
-    axios.post('https://crudcrud.com/api/10c01c74b62c4805a8aefff32edf4979/appointments',obj)
+    axios.post('https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments',obj)
     .then(res => console.log(res))
     .catch(err => console.log(err));
 
