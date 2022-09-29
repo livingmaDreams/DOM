@@ -7,8 +7,17 @@ showList();
 function showList()
 {
     axios.get('https://crudcrud.com/api/10c01c74b62c4805a8aefff32edf4979/appointments')
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+    .then(res =>{
+        storageDisplay(res);
+    })
+    .catch(err => document.body.innerHTML = document.body.innerHTML + "<h4>Something went Wrong</h4>");
+}
+
+function storageDisplay(values)
+{
+    console.log(values);
+    for(let a of values.data)
+      createElement(a);
 }
 
 function addList(e)
@@ -18,16 +27,31 @@ function addList(e)
     const description = document.getElementById("description");
     const category = document.getElementById("category");
 
+    const obj = {
+        Amount: expenseAmount.value,
+        Description: description.value,
+        Category: category.value
+    }
+
+    createElement(obj)
+    sendingList(obj);
+
+    expenseAmount.value='';
+    description.value='';
+    category.value='';
+
+}
+
+function createElement(value){
     const li = document.createElement('li');
     li.id="items";
 
-    const amountTxt=document.createTextNode(expenseAmount.value);
-    const descTxt=document.createTextNode(description.value);
-    const categoryTxt=document.createTextNode(category.value);
+    const amountTxt=document.createTextNode(value.Amount);
+    const descTxt=document.createTextNode(value.Description);
+    const categoryTxt=document.createTextNode(value.Category);
 
     li.append(amountTxt,"-",descTxt,"-",categoryTxt);     
 
-    
     const editButton = document.createElement('button');
     editButton.className="edit-button";
     editButton.textContent="edit";
@@ -42,12 +66,6 @@ function addList(e)
 
     const ListParent = document.getElementById("expense-List");
     ListParent.appendChild(li);
-
-    sendingList(expenseAmount.value,description.value,category.value);
-
-    expenseAmount.value='';
-    description.value='';
-    category.value='';
 
 }
 
@@ -69,13 +87,7 @@ function delList(e)
 
 }
 
-function sendingList(a,b,c){
-
-    const obj = {
-        Amount: a,
-        Description: b,
-        Category: c
-    };
+function sendingList(obj){
 
     axios.post('https://crudcrud.com/api/10c01c74b62c4805a8aefff32edf4979/appointments',obj)
     .then(res => console.log(res))
