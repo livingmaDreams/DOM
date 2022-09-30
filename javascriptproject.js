@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 function showList()
 {
-    axios.get('https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments')
+    axios.get('https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments')
     .then(res =>{
         storageDisplay(res);
     })
@@ -34,10 +34,8 @@ function addList(e)
         Description: description.value,
         Category: category.value
     }
-
-    createElement(obj)
     sendingList(obj);
-
+    
     expenseAmount.value='';
     description.value='';
     category.value='';
@@ -46,7 +44,7 @@ function addList(e)
 
 function createElement(value){
     const li = document.createElement('li');
-    li.id="items";
+    li.id=value._id;
 
     const amountTxt=document.createTextNode(value.Amount);
     const descTxt=document.createTextNode(value.Description);
@@ -73,9 +71,9 @@ function createElement(value){
 
 
 const expenseList= document.getElementById('expense-List');
-expenseList.addEventListener('click',delList);
+expenseList.addEventListener('click',updateDelist);
 
-function delList(e)
+function updateDelist(e)
 {
     e.preventDefault();
     if(e.target.classList.contains('delete-button')){
@@ -83,31 +81,42 @@ function delList(e)
         {
             const parentElement = e.target.parentElement;
             expenseList.removeChild(parentElement);
-            let b =parentElement.firstChild.nodeValue;
-            let url="https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments/";
+            let url="https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments/" +parentElement.id ;
+            axios.delete(url).then(res => console.log(res)).catch(err=> console.log(err));
 
-            axios.get('https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments')
-               .then((res) =>{
-                     for(let a of res.data)
-                     {
-                        if(a.Amount == b){
-                           url = url + a._id;
-                           console.log(url);
-                        }
-                     }
-                     axios.delete(url).then(res => console.log(res)).catch(err=> console.log(err));
-            
-                })
-            .catch(err => console.log(err));
+        }   
+
+     }
+     if(e.target.classList.contains('edit-button')){
+        if(confirm('Are you Sure?'))
+        {
+            const parentElement = e.target.parentElement;
+            editList(parentElement);
         }   
 
      }
 }
+function editList(parEle){
+    const Amount = parEle.firstChild.nodeValue;
+    const Description = parEle.childNodes[2].nodeValue;
+    const Category = parEle.childNodes[4].nodeValue;
+
+    document.getElementById("amount").value = Amount;
+    document.getElementById("description").value = Description;
+    document.getElementById("category").value = Category;
+    
+    expenseList.removeChild(parEle);
+
+    let url="https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments/" + parEle.id ;
+    axios.delete(url).then(res => console.log(res)).catch(err=> console.log(err));
+
+    
+}
 
 function sendingList(obj){
 
-    axios.post('https://crudcrud.com/api/8fa02a64a66145ab95114e148394ee40/appointments',obj)
-    .then(res => console.log(res))
+    axios.post('https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments',obj)
+    .then(res =>createElement(res.data))
     .catch(err => console.log(err));
 
 }
