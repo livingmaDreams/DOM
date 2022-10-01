@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 function showList()
 {
-    axios.get('https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments')
+    axios.get('https://crudcrud.com/api/9eb288a5068b4f07ac99d85a02146e96/appointments')
     .then(res =>{
         storageDisplay(res);
     })
@@ -75,26 +75,27 @@ expenseList.addEventListener('click',updateDelist);
 
 function updateDelist(e)
 {
+    const parentElement = e.target.parentElement;
     e.preventDefault();
     if(e.target.classList.contains('delete-button')){
         if(confirm('Are you Sure?'))
         {
-            const parentElement = e.target.parentElement;
+           
             expenseList.removeChild(parentElement);
-            let url="https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments/" +parentElement.id ;
-            axios.delete(url).then(res => console.log(res)).catch(err=> console.log(err));
-
+           
         }   
 
      }
      if(e.target.classList.contains('edit-button')){
         if(confirm('Are you Sure?'))
         {
-            const parentElement = e.target.parentElement;
             editList(parentElement);
         }   
 
      }
+     let url="https://crudcrud.com/api/9eb288a5068b4f07ac99d85a02146e96/appointments/" +parentElement.id ;
+     axios.delete(url).then(res => console.log(res)).catch(err=> console.log(err));
+
 }
 function editList(parEle){
     const Amount = parEle.firstChild.nodeValue;
@@ -107,16 +108,14 @@ function editList(parEle){
     
     expenseList.removeChild(parEle);
 
-    let url="https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments/" + parEle.id ;
-    axios.delete(url).then(res => console.log(res)).catch(err=> console.log(err));
-
-    
 }
 
 function sendingList(obj){
 
-    axios.post('https://crudcrud.com/api/608e8e4319364826a3d4dad9cdea88aa/appointments',obj)
-    .then(res =>createElement(res.data))
+    axios.post('https://crudcrud.com/api/9eb288a5068b4f07ac99d85a02146e96/appointments',obj)
+    .then(res =>{
+        console.log(res);
+        createElement(res.data)})
     .catch(err => console.log(err));
 
 }
