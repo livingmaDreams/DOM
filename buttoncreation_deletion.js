@@ -25,13 +25,17 @@ function addItem(e){
     //Create New list
     const newlist = document.createElement('li');
     newlist.className='list-group-item';
-    const fullText = textVal.value +"  " + desVal.value;
-    const txtnode = document.createTextNode(fullText);
+    // const fullText = textVal.value +"  " + desVal.value;
+    // const txtnode = document.createTextNode(fullText);
     
-    newlist.appendChild(txtnode);
+    // newlist.appendChild(txtnode);
 
+    const txtnode1 = document.createTextNode(textVal.value);
+    const txtnode2 = document.createTextNode(" " + desVal.value);
+    newlist.appendChild(txtnode1);
+    newlist.appendChild(txtnode2);
 
-
+    
     //Create Button
     const listButton = document.createElement('button');
     listButton.textContent='X';
